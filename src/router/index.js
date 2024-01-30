@@ -100,16 +100,16 @@ router.beforeEach(async (to, from, next) => {
       obtenTipoUsrSQL(auth.currentUser.email);
    
       // Verificar si el usuario es administrador
-      if (to.matched.some((record) => record.meta.requiresAdmin) && UsrTipo !== 1) {
+      //if (to.matched.some((record) => record.meta.requiresAdmin)) {
         // La ruta requiere ser administrador, pero el usuario no es administrador
-        alertaToast("warning", "Acceso no autorizado.");
-        next({
-          name: 'reports'
-        }); // Redirigir a una página adecuada para no administradores
-      } else {
+     //   alertaToast("warning", "Acceso no autorizado.");
+    //    next({
+     //     name: 'reports'
+    //    }); // Redirigir a una página adecuada para no administradores
+     // } else {
         // El usuario es administrador o la ruta no requiere ser administrador
         next();
-      }
+     // }
     }
   } else if (to.name === 'login' && from.name !== 'login') {
     // El usuario está yendo a la vista de inicio de sesión desde otra vista
@@ -127,7 +127,7 @@ router.beforeEach(async (to, from, next) => {
 
 function obtenTipoUsrSQL(correoElectronico) {
   axios
-    .get(`http://localhost:3000/api/users/validaTipo/${correoElectronico}`)
+    .get(`http://localhost:8080/api/users/validaTipo/${correoElectronico}`)
     .then((response) => {
       UsrTipo = response.data[0].UsrTipo;
 
